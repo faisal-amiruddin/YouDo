@@ -1,5 +1,7 @@
 # YouDo - To-Do Web App (Go + React)
 
+![Go Version](https://img.shields.io/badge/Go-1.25.3-00ADD8?logo=go&logoColor=white)
+
 This project is a full-stack to-do web application built with Go for the backend and React for the frontend.
 
 I’m building this app as a personal productivity tool to manage tasks from my coding camp powered by DBS Foundation and my college activities. The goal is to create a simple, clean, and efficient system that helps me stay organized, reduce mental clutter, and work more productively.
