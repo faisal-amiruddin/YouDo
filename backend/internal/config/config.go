@@ -110,7 +110,7 @@ func Load() (*Config, error) {
 		},
 		Database: DatabaseConfig{
 			Host: getEnv("DB_HOST", "localhost"),
-			Port: getEnv("PORT", "5432"),
+			Port: getEnv("DB_PORT", "5432"),
 			User: getEnv("DB_USER", "postgres"),
 			Password: getEnv("DB_PASSWORD", ""),
 			DBName: getEnv("DB_NAME", "youdo_db"),
