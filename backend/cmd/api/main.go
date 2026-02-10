@@ -5,7 +5,7 @@ import (
 	"log"
 
 	"github.com/faisal-amiruddin/YouDo/backend/internal/config"
-	"github.com/faisal-amiruddin/YouDo/backend/internal/config/database"
+	"github.com/faisal-amiruddin/YouDo/backend/internal/database"
 )
 
 func main() {
