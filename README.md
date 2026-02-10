@@ -12,4 +12,4 @@ This repository will serve as both a learning project and a practical tool. It d
 
 🚀 **Open for frontend collaboration!**
 
-I welcome contributions, especially on the React frontend. If you’re interested in improving the UI/UX, adding features, or experimenting with modern frontend practices, feel free to fork the repo and submit a pull request.
+I welcome contributions, especially on the React frontend. If you’re interested in improving the UI/UX, adding features, or experimenting with modern frontend practices, feel free to fork the repo and submit a pull request or contact my email faisalamrdn@gmail.com.
