@@ -4,13 +4,13 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/faisal-amiruddin/YouDo/internal/config"
-	"github.com/faisal-amiruddin/YouDo/internal/database"
-	"github.com/faisal-amiruddin/YouDo/internal/handler"
-	"github.com/faisal-amiruddin/YouDo/internal/middleware"
-	"github.com/faisal-amiruddin/YouDo/internal/repository"
-	"github.com/faisal-amiruddin/YouDo/internal/service"
-	"github.com/faisal-amiruddin/YouDo/internal/utils"
+	"github.com/faisal-amiruddin/YouDo/pkg/config"
+	"github.com/faisal-amiruddin/YouDo/pkg/database"
+	"github.com/faisal-amiruddin/YouDo/pkg/handler"
+	"github.com/faisal-amiruddin/YouDo/pkg/middleware"
+	"github.com/faisal-amiruddin/YouDo/pkg/repository"
+	"github.com/faisal-amiruddin/YouDo/pkg/service"
+	"github.com/faisal-amiruddin/YouDo/pkg/utils"
 
 	_ "github.com/faisal-amiruddin/YouDo/docs"
 
