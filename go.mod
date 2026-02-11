@@ -1,4 +1,4 @@
-module github.com/faisal-amiruddin/YouDo/backend
+module github.com/faisal-amiruddin/YouDo
 
 go 1.25.3
 

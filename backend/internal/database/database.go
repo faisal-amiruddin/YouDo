@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/faisal-amiruddin/YouDo/backend/internal/config"
+	"github.com/faisal-amiruddin/YouDo/internal/config"
 	_ "github.com/lib/pq"
 )
 

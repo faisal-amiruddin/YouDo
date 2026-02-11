@@ -3,9 +3,9 @@ package handler
 import (
 	"net/http"
 
-	"github.com/faisal-amiruddin/YouDo/backend/internal/dto"
-	"github.com/faisal-amiruddin/YouDo/backend/internal/service"
-	"github.com/faisal-amiruddin/YouDo/backend/internal/utils"
+	"github.com/faisal-amiruddin/YouDo/internal/dto"
+	"github.com/faisal-amiruddin/YouDo/internal/service"
+	"github.com/faisal-amiruddin/YouDo/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 

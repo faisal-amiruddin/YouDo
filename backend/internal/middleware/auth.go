@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/faisal-amiruddin/YouDo/backend/internal/utils"
+	"github.com/faisal-amiruddin/YouDo/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 
