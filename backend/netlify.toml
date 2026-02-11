@@ -2,4 +2,4 @@
   base = "backend"
 
 [functions]
-  directory = "backend/netlify/functions"
+  directory = "netlify/functions"
