@@ -1,5 +1,5 @@
 [build]
-  functions = "netlify/functions"
+  base = "backend"
 
 [functions]
-  directory = "netlify/functions"
+  directory = "backend/netlify/functions"
