@@ -50,7 +50,7 @@ func main() {
 
 	router := gin.New()
 
-	router.Use(gin.Recovery()) // Recover from panics
+	router.Use(gin.Recovery())
 	router.Use(middleware.Logger())
 	router.Use(middleware.CORS(cfg.Security.CORSAllowedOrigins))
 	router.Use(middleware.SecurityHeaders())
@@ -90,9 +90,7 @@ func main() {
 	serverAddr := fmt.Sprintf(":%s", cfg.Server.Port)
 	utils.Info("🚀 Server is running on http://localhost%s", serverAddr)
 
-	go func() {
-		if err := router.Run(serverAddr); err != nil {
-			log.Fatalf("Failed to start server: %v", err)
-		}
-	}()
+	if err := router.Run(serverAddr); err != nil {
+		log.Fatalf("Failed to start server: %v", err)
+	}
 }
