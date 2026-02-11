@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/faisal-amiruddin/YouDo/internal/dto"
-	"github.com/faisal-amiruddin/YouDo/internal/model"
-	"github.com/faisal-amiruddin/YouDo/internal/repository"
-	"github.com/faisal-amiruddin/YouDo/internal/utils"
+	"github.com/faisal-amiruddin/YouDo/pkg/dto"
+	"github.com/faisal-amiruddin/YouDo/pkg/model"
+	"github.com/faisal-amiruddin/YouDo/pkg/repository"
+	"github.com/faisal-amiruddin/YouDo/pkg/utils"
 )
 
 type TaskService struct {

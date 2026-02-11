@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/faisal-amiruddin/YouDo/internal/model"
+	"github.com/faisal-amiruddin/YouDo/pkg/model"
 )
 
 type UserRepository struct {

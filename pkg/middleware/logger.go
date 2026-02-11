@@ -3,7 +3,7 @@ package middleware
 import (
 	"time"
 
-	"github.com/faisal-amiruddin/YouDo/internal/utils"
+	"github.com/faisal-amiruddin/YouDo/pkg/utils"
 	"github.com/gin-gonic/gin"
 )
 
