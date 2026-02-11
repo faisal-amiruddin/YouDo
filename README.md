@@ -1,7 +1,7 @@
 # YouDo - To-Do Web App (Go + React)
 
 ![Go Version](https://img.shields.io/badge/Go-1.25.3-00ADD8?logo=go&logoColor=white)
-![React Version](https://img.shields.io/badge/React-19.2.4-61DAFB?logo=react&logoColor=black)
+![React Version](https://img.shields.io/badge/React-19.2.4-61DAFB?logo=react&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&logoColor=white)
 
 This project is a full-stack to-do web application built with Go for the backend and React for the frontend.
