@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/faisal-amiruddin/YouDo/backend/internal/dto"
-	"github.com/faisal-amiruddin/YouDo/backend/internal/middleware"
-	"github.com/faisal-amiruddin/YouDo/backend/internal/service"
-	"github.com/faisal-amiruddin/YouDo/backend/internal/utils"
+	"github.com/faisal-amiruddin/YouDo/internal/dto"
+	"github.com/faisal-amiruddin/YouDo/internal/middleware"
+	"github.com/faisal-amiruddin/YouDo/internal/service"
+	"github.com/faisal-amiruddin/YouDo/internal/utils"
 	"github.com/gin-gonic/gin"
 )
 

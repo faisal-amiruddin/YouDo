@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/faisal-amiruddin/YouDo/backend/internal/model"
+	"github.com/faisal-amiruddin/YouDo/internal/model"
 )
 
 type TaskRepository struct {
