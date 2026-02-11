@@ -12,7 +12,7 @@ import (
 	"github.com/faisal-amiruddin/YouDo/internal/service"
 	"github.com/faisal-amiruddin/YouDo/internal/utils"
 
-	_ "github.com/faisal-amiruddin/YouDo/backend/docs"
+	_ "github.com/faisal-amiruddin/YouDo/docs"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
