@@ -13,6 +13,8 @@ import (
 	"github.com/faisal-amiruddin/YouDo/backend/internal/utils"
 	"github.com/gin-gonic/gin"
 
+	_ "github.com/faisal-amiruddin/YouDo/backend/docs"
+
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )

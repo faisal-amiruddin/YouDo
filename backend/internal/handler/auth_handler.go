@@ -17,6 +17,17 @@ func NewAuthHandler(authService *service.AuthService) *AuthHandler {
 	return &AuthHandler{authService: authService}
 }
 
+// Register godoc
+// @Summary Register a new user
+// @Description Create a new user account
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param request body dto.RegisterRequest true "Registration details"
+// @Success 201 {object} utils.Response{data=dto.AuthResponse}
+// @Failure 400 {object} utils.Response
+// @Failure 500 {object} utils.Response
+// @Router /api/auth/register [post]
 func (h *AuthHandler) Register(c *gin.Context) {
 	var req dto.RegisterRequest
 
@@ -34,6 +45,17 @@ func (h *AuthHandler) Register(c *gin.Context) {
 	utils.SuccessResponse(c, http.StatusCreated, "User registered successfully", response)
 }
 
+// Login godoc
+// @Summary Login user
+// @Description Authenticate user and return JWT token
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param request body dto.LoginRequest true "Login credentials"
+// @Success 200 {object} utils.Response{data=dto.AuthResponse}
+// @Failure 400 {object} utils.Response
+// @Failure 401 {object} utils.Response
+// @Router /api/auth/login [post]
 func (h *AuthHandler) Login(c *gin.Context) {
 	var req dto.LoginRequest
 
