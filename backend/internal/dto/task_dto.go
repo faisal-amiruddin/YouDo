@@ -10,9 +10,10 @@ type CreateTaskRequest struct {
 }
 
 type UpdateTaskRequest struct {
-	Title       string  `json:"title" binding:"required,min=1,max=255"`
-	Description string  `json:"description"`
-	Priority    string  `json:"priority" binding:"omitempty,onof=low medium high"`
+	Title       *string  `json:"title" binding:"required,min=1,max=255"`
+	Description *string  `json:"description"`
+	IsCompleted *bool   `json:"is_completed"`
+	Priority    *string  `json:"priority" binding:"omitempty,onof=low medium high"`
 	DueDate     *string `json:"due_date"`
 }
 
