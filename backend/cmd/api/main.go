@@ -12,7 +12,29 @@ import (
 	"github.com/faisal-amiruddin/YouDo/backend/internal/service"
 	"github.com/faisal-amiruddin/YouDo/backend/internal/utils"
 	"github.com/gin-gonic/gin"
+
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
+
+// @title YouDo API
+// @version 1.0
+// @description A simple and efficient To-Do application API built with Go and Gin framework
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.email faisalamrdn@gmail.com
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /
+
+// @securityDefinitions.apikey BearerAuth
+// @in header
+// @name Authorization
+// @description Type "Bearer" followed by a space and JWT token.
 
 func main() {
 	fmt.Println("Anjay Mabar")
@@ -68,6 +90,8 @@ func main() {
 		})
 	})
 
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	api := router.Group("/api")
 	{
 		auth := api.Group("/auth")
@@ -89,6 +113,7 @@ func main() {
 
 	serverAddr := fmt.Sprintf(":%s", cfg.Server.Port)
 	utils.Info("🚀 Server is running on http://localhost%s", serverAddr)
+	utils.Info("📚 Swagger documentation: http://localhost%s/swagger/index.html", serverAddr)
 
 	if err := router.Run(serverAddr); err != nil {
 		log.Fatalf("Failed to start server: %v", err)
