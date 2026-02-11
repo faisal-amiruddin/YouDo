@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 )
 
 type Logger struct {
@@ -76,4 +77,8 @@ func Error(format string, v ...interface{}) {
 	if logLevel <= DEBUG && logger != nil {
 		logger.error.Output(2, fmt.Sprintf(format, v...))
 	}
+}
+
+func LogRequest(method, path, ip string, duration time.Duration) {
+	Info("[%s] %s - IP: %s - Duration: %v", method, path, ip, duration)
 }
