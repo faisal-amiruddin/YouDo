@@ -34,9 +34,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDelete, o
     transition-all hover:scale-110
   `;
 
-  // Calculate Urgency
-  const isUrgent = React.useMemo(() => {
-    if (task.is_completed || !task.due_date) return false;
+  // Calculate Urgency and Specific Label
+  const urgencyInfo = React.useMemo(() => {
+    if (task.is_completed || !task.due_date) return null;
     const due = new Date(task.due_date);
     const now = new Date();
     // Reset hours to compare dates only
@@ -46,7 +46,15 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDelete, o
     const diffTime = due.getTime() - now.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    return diffDays <= 3; // Includes overdue and upcoming within 3 days
+    // Only urgent if 3 days or less (including overdue)
+    if (diffDays > 3) return null;
+
+    let label = '';
+    if (diffDays < 0) label = `OVERDUE ${Math.abs(diffDays)}D`;
+    else if (diffDays === 0) label = 'TODAY!';
+    else label = `D-${diffDays}`;
+
+    return { label, isUrgent: true };
   }, [task.due_date, task.is_completed]);
 
   return (
@@ -54,7 +62,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDelete, o
       border-4 border-black dark:border-white p-6 neo-brutal-shadow hover:translate-x-[-2px] hover:translate-y-[-2px] hover:neo-brutal-shadow-lg
       relative overflow-hidden transition-all duration-200 flex flex-col h-full
       ${cardBg}
-      ${isUrgent ? 'ring-4 ring-[#ff5555] ring-offset-4 ring-offset-[#f3f3f3] dark:ring-offset-[#121212]' : ''}
+      ${urgencyInfo ? 'ring-4 ring-[#ff5555] ring-offset-4 ring-offset-[#f3f3f3] dark:ring-offset-[#121212]' : ''}
     `}>
       {/* Decorative corner tag */}
       <div className={`absolute top-0 right-0 px-4 py-2 border-b-4 border-l-4 border-black dark:border-white font-black uppercase text-sm tracking-wide ${priorityColors[task.priority]}`}>
@@ -62,9 +70,9 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDelete, o
       </div>
 
       {/* WARNING STICKER for Urgent Tasks */}
-      {isUrgent && (
+      {urgencyInfo && (
         <div className="absolute top-0 left-0 bg-[#ff5555] text-white border-b-4 border-r-4 border-black dark:border-white p-2 z-10 animate-pulse">
-           <span className="text-xl font-black">⚠️ D-3</span>
+           <span className="text-xl font-black">⚠️ {urgencyInfo.label}</span>
         </div>
       )}
       
@@ -88,7 +96,7 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggleComplete, onDelete, o
 
       <div className="mt-4 pt-4 border-t-4 border-black/10 dark:border-white/20 flex justify-between items-center">
         {task.due_date ? (
-            <div className={`text-xs font-black uppercase px-2 py-1 border-2 border-black dark:border-white/50 inline-block ${textColor} ${isUrgent ? 'bg-[#ff5555] text-white border-none' : ''}`}>
+            <div className={`text-xs font-black uppercase px-2 py-1 border-2 border-black dark:border-white/50 inline-block ${textColor} ${urgencyInfo ? 'bg-[#ff5555] text-white border-none' : ''}`}>
               📅 {new Date(task.due_date).toLocaleDateString()}
             </div>
           ) : <span className="text-xs font-bold opacity-50 uppercase">No Deadline</span>}
