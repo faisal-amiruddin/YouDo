@@ -1,25 +1,26 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { api } from './api';
 import { Task, User, Priority } from './types';
 import Button from './components/Button';
 import Input from './components/Input';
 import TaskCard from './components/TaskCard';
-import Loader from './components/Loader.tsx';
-import ConfirmModal from './components/ConfirmModal.tsx';
+import Loader from './components/Loader';
+import ConfirmModal from './components/ConfirmModal';
 
 // Theme Toggle Component
 const ThemeToggle: React.FC<{ isDark: boolean; toggle: () => void }> = ({ isDark, toggle }) => (
   <button
     onClick={toggle}
     className={`
-      w-16 h-8 border-4 border-black dark:border-gray-200 rounded-full relative 
+      w-16 h-8 border-4 border-black dark:border-white rounded-full relative 
       bg-white dark:bg-black transition-colors neo-brutal-shadow
     `}
     aria-label="Toggle Dark Mode"
   >
     <div
       className={`
-        absolute top-[-4px] left-[-4px] w-8 h-8 border-4 border-black dark:border-gray-200 rounded-full 
+        absolute top-[-4px] left-[-4px] w-8 h-8 border-4 border-black dark:border-white rounded-full 
         bg-[#ffdf00] dark:bg-[#00f0ff] transition-transform duration-300 flex items-center justify-center
         ${isDark ? 'translate-x-8' : 'translate-x-0'}
       `}
@@ -40,7 +41,7 @@ const PrioritySelect: React.FC<{ value: Priority; onChange: (v: Priority) => voi
           type="button"
           onClick={() => onChange(p)}
           className={`
-            flex-1 py-3 border-4 border-black dark:border-gray-200 font-black uppercase transition-all transform
+            flex-1 py-3 border-4 border-black dark:border-white font-black uppercase transition-all transform
             ${value === p 
               ? 'bg-black text-white dark:bg-white dark:text-black neo-brutal-shadow-active scale-95' 
               : 'bg-white text-black dark:bg-[#2a2a2a] dark:text-white neo-brutal-shadow hover:translate-y-[-2px]'}
@@ -233,6 +234,17 @@ const App: React.FC = () => {
   const incompleteTasks = tasks.filter(t => !t.is_completed).sort((a, b) => new Date(b.created_at || 0).getTime() - new Date(a.created_at || 0).getTime());
   const completedTasks = tasks.filter(t => t.is_completed).sort((a, b) => new Date(b.updated_at || 0).getTime() - new Date(a.updated_at || 0).getTime());
 
+  // Count urgent tasks (due date exists, not completed, diff <= 3 days)
+  const urgentCount = incompleteTasks.filter(task => {
+    if (!task.due_date) return false;
+    const due = new Date(task.due_date);
+    const now = new Date();
+    due.setHours(0,0,0,0);
+    now.setHours(0,0,0,0);
+    const diffDays = Math.ceil((due.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+    return diffDays <= 3;
+  }).length;
+
   // --- RENDER AUTH VIEW ---
   if (!token) {
     return (
@@ -240,18 +252,18 @@ const App: React.FC = () => {
         {loading && <Loader />}
         
         {/* Decorative Blobs */}
-        <div className="absolute top-10 left-10 w-32 h-32 bg-[#ffdf00] border-4 border-black dark:border-gray-200 rounded-full neo-brutal-shadow animate-bounce delay-100 hidden md:block"></div>
-        <div className="absolute bottom-10 right-10 w-48 h-48 bg-[#00f0ff] border-4 border-black dark:border-gray-200 transform rotate-12 neo-brutal-shadow hidden md:block"></div>
+        <div className="absolute top-10 left-10 w-32 h-32 bg-[#ffdf00] border-4 border-black dark:border-white rounded-full neo-brutal-shadow animate-bounce delay-100 hidden md:block"></div>
+        <div className="absolute bottom-10 right-10 w-48 h-48 bg-[#00f0ff] border-4 border-black dark:border-white transform rotate-12 neo-brutal-shadow hidden md:block"></div>
 
         <div className="w-full max-w-lg z-10">
             <div className="flex justify-between items-center mb-6">
                 <div className="bg-black text-white dark:bg-white dark:text-black px-4 py-2 text-xl font-black border-4 border-transparent dark:border-transparent -skew-x-12">
-                   EST. 2026
+                   EST. 2025
                 </div>
                 <ThemeToggle isDark={isDarkMode} toggle={toggleTheme} />
             </div>
 
-            <div className="bg-white dark:bg-[#1a1a1a] border-4 border-black dark:border-gray-200 p-8 md:p-12 neo-brutal-shadow-lg transform rotate-1 md:rotate-2 transition-transform hover:rotate-0">
+            <div className="bg-white dark:bg-[#1a1a1a] border-4 border-black dark:border-white p-8 md:p-12 neo-brutal-shadow-lg transform rotate-1 md:rotate-2 transition-transform hover:rotate-0">
                 <h1 className="text-7xl font-black uppercase mb-2 text-black dark:text-white leading-[0.8]">
                     YOU<span className="text-[#ff5555]">DO</span>.
                 </h1>
@@ -260,7 +272,7 @@ const App: React.FC = () => {
                 </p>
                 
                 {error && (
-                    <div className="bg-[#ff5555] text-white border-4 border-black dark:border-gray-200 p-4 font-bold uppercase mb-6 neo-brutal-shadow animate-pulse">
+                    <div className="bg-[#ff5555] text-white border-4 border-black dark:border-white p-4 font-bold uppercase mb-6 neo-brutal-shadow animate-pulse">
                         ⚠️ {error}
                     </div>
                 )}
@@ -297,7 +309,7 @@ const App: React.FC = () => {
                     </Button>
                 </form>
 
-                <div className="mt-8 pt-6 border-t-4 border-black dark:border-gray-200 text-center">
+                <div className="mt-8 pt-6 border-t-4 border-black dark:border-white text-center">
                     <p className="font-bold text-black dark:text-white uppercase mb-4">
                         {isRegister ? 'Already a member?' : 'New around here?'}
                     </p>
@@ -331,7 +343,7 @@ const App: React.FC = () => {
       />
 
       {/* HEADER */}
-      <header className="border-b-4 border-black dark:border-gray-200 bg-white dark:bg-[#1a1a1a] sticky top-0 z-40">
+      <header className="border-b-4 border-black dark:border-white bg-white dark:bg-[#1a1a1a] sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div className="flex items-center gap-4">
                 <div className="bg-black text-white dark:bg-white dark:text-black w-12 h-12 flex items-center justify-center font-black text-2xl border-2 border-transparent">
@@ -341,7 +353,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-4 md:gap-6">
-                 <span className="hidden md:block font-bold uppercase text-sm border-r-4 border-black dark:border-gray-200 pr-6 dark:text-white">
+                 <span className="hidden md:block font-bold uppercase text-sm border-r-4 border-black dark:border-white pr-6 dark:text-white">
                     USER: {user?.name}
                  </span>
                  <ThemeToggle isDark={isDarkMode} toggle={toggleTheme} />
@@ -356,34 +368,34 @@ const App: React.FC = () => {
         
         {/* STATS BAR */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            <div className="bg-[#ffdf00] border-4 border-black dark:border-gray-200 p-4 neo-brutal-shadow">
+            <div className="bg-[#ffdf00] border-4 border-black dark:border-white p-4 neo-brutal-shadow">
                 <p className="font-bold text-xs uppercase mb-1 text-black">Total Tasks</p>
                 <p className="font-black text-4xl text-black">{tasks.length}</p>
             </div>
-            <div className="bg-[#00f0ff] border-4 border-black dark:border-gray-200 p-4 neo-brutal-shadow">
+            <div className="bg-[#00f0ff] border-4 border-black dark:border-white p-4 neo-brutal-shadow">
                 <p className="font-bold text-xs uppercase mb-1 text-black">Pending</p>
                 <p className="font-black text-4xl text-black">{incompleteTasks.length}</p>
             </div>
-            <div className="bg-[#86efac] border-4 border-black dark:border-gray-200 p-4 neo-brutal-shadow">
+            <div className="bg-[#86efac] border-4 border-black dark:border-white p-4 neo-brutal-shadow">
                 <p className="font-bold text-xs uppercase mb-1 text-black">Completed</p>
                 <p className="font-black text-4xl text-black">{completedTasks.length}</p>
             </div>
             <button 
                 onClick={() => setTaskForm({ ...taskForm, show: true, id: null, title: '', description: '', priority: 'medium', due_date: '', is_completed: false })}
-                className="bg-black dark:bg-white text-white dark:text-black border-4 border-black dark:border-gray-200 p-4 neo-brutal-shadow hover:translate-y-1 active:translate-y-2 flex items-center justify-center gap-2 group"
+                className="bg-black dark:bg-white text-white dark:text-black border-4 border-black dark:border-white p-4 neo-brutal-shadow hover:translate-y-1 active:translate-y-2 flex items-center justify-center gap-2 group"
             >
                 <span className="text-4xl leading-none group-hover:rotate-90 transition-transform duration-300">+</span>
                 <span className="font-black uppercase text-lg">New Task</span>
             </button>
         </div>
 
-        {error && <div className="bg-[#ff5555] text-white border-4 border-black dark:border-gray-200 p-4 font-bold uppercase mb-8 neo-brutal-shadow">{error}</div>}
+        {error && <div className="bg-[#ff5555] text-white border-4 border-black dark:border-white p-4 font-bold uppercase mb-8 neo-brutal-shadow">{error}</div>}
 
         {/* MODAL FORM */}
         {taskForm.show && (
           <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
-            <div className="bg-[#f0f0f0] dark:bg-[#222] border-4 border-black dark:border-gray-200 p-6 md:p-8 w-full max-w-2xl neo-brutal-shadow-lg max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95 duration-200">
-              <div className="flex justify-between items-center mb-8 border-b-4 border-black dark:border-gray-200 pb-4">
+            <div className="bg-[#f0f0f0] dark:bg-[#222] border-4 border-black dark:border-white p-6 md:p-8 w-full max-w-2xl neo-brutal-shadow-lg max-h-[90vh] overflow-y-auto relative animate-in fade-in zoom-in-95 duration-200">
+              <div className="flex justify-between items-center mb-8 border-b-4 border-black dark:border-white pb-4">
                   <h2 className="text-4xl font-black uppercase text-black dark:text-white">{taskForm.id ? 'Edit Mission' : 'New Mission'}</h2>
                   <button onClick={() => setTaskForm({ ...taskForm, show: false })} className="text-4xl font-black hover:text-[#ff5555] dark:text-white dark:hover:text-[#ff5555]">&times;</button>
               </div>
@@ -417,7 +429,7 @@ const App: React.FC = () => {
                     />
                 </div>
 
-                <div className="flex gap-4 mt-8 pt-6 border-t-4 border-black dark:border-gray-200">
+                <div className="flex gap-4 mt-8 pt-6 border-t-4 border-black dark:border-white">
                   <Button type="submit" variant="success" className="flex-1 py-4 text-xl" disabled={loading}>
                     {taskForm.id ? 'UPDATE MISSION' : 'INITIATE MISSION'}
                   </Button>
@@ -430,9 +442,22 @@ const App: React.FC = () => {
           </div>
         )}
 
+        {/* URGENCY ALERT BANNER */}
+        {urgentCount > 0 && (
+          <div className="mb-8 border-4 border-black dark:border-white bg-[#ff5555] p-4 neo-brutal-shadow flex items-center justify-between animate-pulse">
+            <div className="flex items-center gap-4">
+              <span className="text-4xl">🚨</span>
+              <div>
+                <h3 className="text-2xl font-black uppercase text-white leading-none">Warning: Deadline approaching!</h3>
+                <p className="font-bold text-white uppercase text-sm mt-1">{urgentCount} missions require immediate attention (Less than 3 days left).</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* INCOMPLETE TASKS SECTION */}
         <div className="mb-20">
-            <div className="flex items-end gap-4 mb-8 border-b-4 border-black dark:border-gray-200 pb-2">
+            <div className="flex items-end gap-4 mb-8 border-b-4 border-black dark:border-white pb-2">
               <h2 className="text-5xl font-black uppercase text-transparent bg-clip-text bg-gradient-to-r from-black to-gray-500 dark:from-white dark:to-gray-500">
                 PENDING
               </h2>
@@ -451,7 +476,7 @@ const App: React.FC = () => {
               ))}
             </div>
           ) : (
-            <div className="border-4 border-dashed border-black dark:border-gray-200/50 p-12 text-center bg-white/50 dark:bg-white/5 rounded-lg">
+            <div className="border-4 border-dashed border-black dark:border-white/50 p-12 text-center bg-white/50 dark:bg-white/5 rounded-lg">
               <p className="text-2xl font-black uppercase text-gray-400 mb-4">NO ACTIVE MISSIONS</p>
               <p className="text-gray-500 dark:text-gray-400 font-bold">The world is safe... for now.</p>
             </div>
@@ -461,7 +486,7 @@ const App: React.FC = () => {
         {/* COMPLETED TASKS SECTION */}
         {completedTasks.length > 0 && (
           <div className="opacity-80 hover:opacity-100 transition-opacity">
-              <div className="flex items-end gap-4 mb-8 border-b-4 border-black dark:border-gray-200 pb-2">
+              <div className="flex items-end gap-4 mb-8 border-b-4 border-black dark:border-white pb-2">
                 <h2 className="text-4xl font-black uppercase text-gray-500 dark:text-gray-400">
                   ARCHIVE
                 </h2>
@@ -482,9 +507,9 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="mt-20 py-8 border-t-4 border-black dark:border-gray-200 bg-white dark:bg-[#1a1a1a] text-center">
+      <footer className="mt-20 py-8 border-t-4 border-black dark:border-white bg-white dark:bg-[#1a1a1a] text-center">
         <p className="font-bold uppercase tracking-widest text-xs md:text-sm text-black dark:text-white">
-            YouDo System // {new Date().getFullYear()}
+            YouDo System v2.0 // Neobrutalism Edition // {new Date().getFullYear()}
         </p>
       </footer>
     </div>
